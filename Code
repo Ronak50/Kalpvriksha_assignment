@@ -1,1 +1,86 @@
-
+#include <stdio.h>
+#include <string.h>
+int commonShare(const char* corp1, const char* corp2, char* result,char city[100],char suburbs[2][20],char towns[4][20],char corporations[8][20]) {
+    char town1[20] = "";
+    char town2[20] = "";
+    for (int i = 0; i < 8; i++) {
+        if (strcmp(corporations[i], corp1) == 0) {
+            strcpy(town1, towns[i / 2]);
+        }
+        if (strcmp(corporations[i], corp2) == 0) {
+            strcpy(town2, towns[i / 2]);
+        }
+    }
+    if (town1 == '\0' || town2 == '\0') {
+        return 0;
+    }
+    char suburb1[20] = "";
+    char suburb2[20] = "";
+    for (int i = 0; i <4; i++) {
+        if (strcmp(towns[i], town1) == 0) {
+            strcpy(suburb1, suburbs[i / 2]);
+        }
+        if (strcmp(towns[i], town2) == 0) {
+            strcpy(suburb2, suburbs[i / 2]);
+        }
+    }
+if (suburb1 == '\0' || suburb2 == '\0') {
+        return 0;
+    }
+    char city1[20] = "";
+    char city2[20] = "";
+    for (int i = 0; i < 2; i++) {
+        if (strcmp(suburbs[i], suburb1) == 0) {
+            strcpy(city1,city);
+        }
+        if (strcmp(suburbs[i], suburb2) == 0) {
+            strcpy(city2,city);
+        }
+    }
+    if (city1 == '\0' || city2 == '\0') {
+        return 0;
+    }
+    if (strcmp(town1, town2) == 0) {
+        strcpy(result, town1);
+        strcat(result, ", ");
+    }
+    if(strcmp(suburb1,suburb2)==0){
+        strcat(result,suburb1);
+        strcat(result, ", ");
+    }
+    strcat(result, city1);
+    return 1;
+}
+int main() {
+    char city[20];
+    printf("\n Enter city name ");
+    scanf("%s", city);
+    char suburbs[2][20];
+    for (int i = 0; i < 2; i++) {
+        printf("Enter suburbs %d: ",i + 1);
+        scanf(" %s", suburbs[i]);
+    }
+    char towns[4][20];
+    for (int i = 0; i < 4; i++) {
+        printf("Enter town %d: ",i + 1);
+        scanf(" %s", towns[i]);
+    }
+    char corporations[8][20];
+    for (int i = 0; i < 8; i++) {
+        printf("Enter corporation %d: ",i + 1);
+        scanf(" %s", corporations[i]);
+    }
+    char corp1[10];
+    printf("Enter corporation ID 1: ");
+    scanf(" %s", corp1);
+    char corp2[10];
+    printf("Enter corporation ID 2: ");
+    scanf(" %s", corp2);
+    char result[100];
+ if (commonShare(corp1, corp2, result, city, suburbs, towns, corporations)) {
+        printf("%s\n", result);
+    } else {
+        printf("Invalid value ");
+    }
+return 0;
+}
